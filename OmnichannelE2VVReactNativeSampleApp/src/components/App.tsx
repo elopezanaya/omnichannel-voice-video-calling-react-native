@@ -23,12 +23,19 @@ export default function App() {
   const [organizationURL, onChangeOrganizationURL] = React.useState(null);
 
   const onLoadChatWidget = async () => {
-    if (widgetId && organizationId && organizationURL) {
+
+    console.log("ELOPEZANAYA loading =>" + widgetId);
+
+    let tmpW = "8ecbd021-91c4-4114-b2d9-b8f5f92fc174";
+    let tmpO = "27ff8a63-815a-49f6-b180-b248f806b867";
+    let tmpU = "https://unq27ff8a63815a49f6b180b248f806b-crm10.oc.crmlivetie.com";
+
+    if (!widgetId && !organizationId && !organizationURL) {
       console.log("Omnichannel Config");
       let omnichannelConfig = {};
-      omnichannelConfig["orgId"] = organizationId;
-      omnichannelConfig["orgUrl"] = organizationURL;
-      omnichannelConfig["widgetId"] = widgetId;
+      omnichannelConfig["orgId"] = tmpO;
+      omnichannelConfig["orgUrl"] = tmpU;
+      omnichannelConfig["widgetId"] = tmpW;
 
       const chatSDK = new OmnichannelChatSDK(omnichannelConfig);
       await chatSDK.initialize();
@@ -84,7 +91,7 @@ export default function App() {
         setInVideoCall(false);
         setInVoiceCall(false);
       });
-
+      console.error("Here , everything is ready");
       setIsReady(true);
     }
   }
@@ -97,7 +104,10 @@ export default function App() {
       return;
     }
 
+    console.warn("ELOPEZANAYA => about to call start chat");
     await chatSDK?.startChat();
+    console.warn("ELOPEZANAYA => after to call start chat");
+
     const callingToken = await chatSDK?.getCallingToken();
     console.log(callingToken);
     chatSDK?.onAgentEndSession(async () => {
@@ -225,19 +235,19 @@ export default function App() {
           <TextInput
             style={styles.input}
             onChangeText={onChangeWidgetId}
-            value={widgetId}
+            value="8ecbd021-91c4-4114-b2d9-b8f5f92fc174"
             placeholder="Widget/App Id"
           />
           <TextInput
             style={styles.input}
             onChangeText={onChangeOrganizationId}
-            value={organizationId}
+            value="27ff8a63-815a-49f6-b180-b248f806b867"
             placeholder="Organization Id"
           />
           <TextInput
             style={styles.input}
             onChangeText={onChangeOrganizationURL}
-            value={organizationURL}
+            value="https://unq27ff8a63815a49f6b180b248f806b-crm10.oc.crmlivetie.com"
             placeholder="Organization Url"
           />
           <TouchableHighlight style={styles.touchableHighlight}>
